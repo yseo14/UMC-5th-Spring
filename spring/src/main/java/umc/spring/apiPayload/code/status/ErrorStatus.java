@@ -3,8 +3,8 @@ package umc.spring.apiPayload.code.status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import umc.spring.apiPayload.BaseErrorCode;
-import umc.spring.apiPayload.ErrorReasonDTO;
+import umc.spring.apiPayload.code.BaseErrorCode;
+import umc.spring.apiPayload.code.ErrorReasonDTO;
 
 @Getter
 @AllArgsConstructor
