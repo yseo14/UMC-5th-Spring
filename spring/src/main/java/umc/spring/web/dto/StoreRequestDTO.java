@@ -9,8 +9,10 @@ public class StoreRequestDTO {
 
     @Getter
     public static class saveDto {
+
         @NotBlank
         String name;
+        
         @NotBlank
         String address;
     }
