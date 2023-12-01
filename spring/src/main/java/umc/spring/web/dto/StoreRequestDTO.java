@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 public class StoreRequestDTO {
 
     @Getter
-    public static class saveDto {
+    public static class StoreDTO {
 
         @NotBlank
         String name;
@@ -17,4 +17,13 @@ public class StoreRequestDTO {
         String address;
     }
 
+    @Getter
+    public static class ReviewDTO{
+        @NotBlank
+        String title;
+        @NotBlank
+        String body;
+        @NotNull
+        Float score;
+    }
 }

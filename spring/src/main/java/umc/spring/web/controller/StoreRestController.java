@@ -1,27 +1,39 @@
 package umc.spring.web.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import umc.spring.apiPayload.ApiResponse;
 import umc.spring.converter.StoreConverter;
+import umc.spring.domain.Review;
 import umc.spring.domain.Store;
 import umc.spring.service.MemberService.StoreCommandService;
+import umc.spring.validation.annotation.ExistStores;
 import umc.spring.web.dto.StoreRequestDTO;
 import umc.spring.web.dto.StoreResponseDTO;
 
 import javax.validation.Valid;
 
 @RestController
+@Validated
 @RequiredArgsConstructor
-@RequestMapping("region/{regionId}/store")
+@RequestMapping("/region/{regionId}")
 public class StoreRestController {
 
     private final StoreCommandService storeCommandService;
 
-    @PostMapping
-    public ApiResponse<StoreResponseDTO.saveResultDTO> save(@RequestBody @Valid StoreRequestDTO.saveDto request,
-                                                            @PathVariable(name = "regionId") Long regionId) {
+    @PostMapping("/store")
+    public ApiResponse<StoreResponseDTO.saveStoreResultDTO> saveStore(@RequestBody @Valid StoreRequestDTO.StoreDTO request,
+                                                                      @PathVariable(name = "regionId") Long regionId) {
         Store store = storeCommandService.saveStore(regionId, request);
-        return ApiResponse.onSuccess(StoreConverter.toSaveResultDTO(store));
+        return ApiResponse.onSuccess(StoreConverter.toSaveStoreResultDTO(store));
+    }
+
+    @PostMapping("/{storeId}/reviews")
+    public ApiResponse<StoreResponseDTO.CreateReviewResultDTO> createReview(@RequestBody @Valid StoreRequestDTO.ReviewDTO request,
+                                                                            @ExistStores @PathVariable(name="storeId")  Long storeId,
+                                                                            @RequestParam(name="memberId")  Long memberId){
+        Review review = storeCommandService.createReview(memberId, storeId, request);
+        return ApiResponse.onSuccess(StoreConverter.toCreateReviewResultDTO(review));
     }
 }
