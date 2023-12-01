@@ -1,9 +1,6 @@
 package umc.spring.domain;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import umc.spring.domain.common.BaseEntity;
 import umc.spring.domain.mapping.Review;
 
@@ -14,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Store extends BaseEntity {
@@ -41,4 +39,12 @@ public class Store extends BaseEntity {
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Mission> missionsList = new ArrayList<>();
+
+    public void setRegion(Region region) {
+        if (this.region != null) {
+            region.getStoreList().remove(this);
+        }
+        this.region = region;
+        region.getStoreList().add(this);
+    }
 }
