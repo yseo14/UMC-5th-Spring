@@ -2,7 +2,6 @@ package umc.spring.domain;
 
 import lombok.*;
 import umc.spring.domain.common.BaseEntity;
-import umc.spring.domain.mapping.Review;
 
 import javax.persistence.*;
 import java.util.ArrayList;

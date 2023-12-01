@@ -10,12 +10,10 @@ import umc.spring.domain.enums.MemberStatus;
 import umc.spring.domain.enums.SocialType;
 import umc.spring.domain.mapping.MemberMission;
 import umc.spring.domain.mapping.MemberPrefer;
-import umc.spring.domain.mapping.Review;
 import umc.spring.domain.mapping.TermsAgreement;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
