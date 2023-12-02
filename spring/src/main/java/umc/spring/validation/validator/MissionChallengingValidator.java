@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import umc.spring.apiPayload.code.status.ErrorStatus;
 import umc.spring.domain.mapping.MemberMission;
+import umc.spring.repository.MemberMissionRepository;
 import umc.spring.service.MissionService.MissionQueryService;
 import umc.spring.validation.annotation.IsChallenging;
+import umc.spring.web.dto.MissionRequestDTO;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -13,10 +15,9 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class MissionChallengingValidator implements ConstraintValidator<IsChallenging, MemberMission> {
+public class MissionChallengingValidator implements ConstraintValidator<IsChallenging, MissionRequestDTO.ChallengeMissionDTO> {
 
     private final MissionQueryService missionQueryService;
-
 
     @Override
     public void initialize(IsChallenging constraintAnnotation) {
@@ -24,18 +25,15 @@ public class MissionChallengingValidator implements ConstraintValidator<IsChalle
     }
 
     @Override
-    public boolean isValid(MemberMission value, ConstraintValidatorContext context) {
-//        Optional<Store> target = storeQueryService.findStore(value);    //optional: null이 올 수 있는 값을 감싸는 wrapper 클래스(NPE 방지)
-        Long memberId = value.getMember().getId();
-        Long missionId = value.getMission().getId();
+    public boolean isValid(MissionRequestDTO.ChallengeMissionDTO value, ConstraintValidatorContext context) {
+        Optional<MemberMission> target = missionQueryService.findMemberMission(value.getMemberId(), value.getMissionId());
 
-        Optional<MemberMission> target = missionQueryService.findMemberMission(memberId, missionId);
-
-        if (!target.isEmpty()){
+        if (target.isPresent()){
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(ErrorStatus.MISSION_ALREADY_CHALLENGING.toString()).addConstraintViolation();
             return false;
         }
         return true;
     }
+
 }

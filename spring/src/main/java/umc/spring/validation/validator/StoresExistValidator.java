@@ -17,7 +17,6 @@ public class StoresExistValidator implements ConstraintValidator<ExistStores, Lo
 
     private final StoreQueryService storeQueryService;
 
-
     @Override
     public void initialize(ExistStores constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);

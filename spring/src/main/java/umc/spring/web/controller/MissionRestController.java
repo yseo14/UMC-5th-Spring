@@ -10,6 +10,8 @@ import umc.spring.service.MissionService.MissionCommandService;
 import umc.spring.web.dto.MissionRequestDTO;
 import umc.spring.web.dto.MissionResponseDTO;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @Validated
@@ -17,12 +19,10 @@ import umc.spring.web.dto.MissionResponseDTO;
 public class MissionRestController {
     private final MissionCommandService missionCommandService;
 
-    @PostMapping("/{missionId}")
-    public ApiResponse<MissionResponseDTO.ChallengeMissionResponseDTO> challengeMission(@RequestBody MissionRequestDTO.ChallengeMissionDTO request,
-                                                                                        @PathVariable Long missionId,
-                                                                                        @RequestParam Long memberId) {
+    @PostMapping("/")
+    public ApiResponse<MissionResponseDTO.ChallengeMissionResponseDTO> challengeMission(@Valid @RequestBody MissionRequestDTO.ChallengeMissionDTO request) {
 
-        MemberMission memberMission = missionCommandService.challengeMission(memberId, missionId, request);
+        MemberMission memberMission = missionCommandService.challengeMission(request);
         return ApiResponse.onSuccess(MissionConverter.toChallengeMissionDTO(memberMission));
     }
 
