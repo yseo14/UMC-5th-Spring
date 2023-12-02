@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import umc.spring.apiPayload.code.status.ErrorStatus;
 import umc.spring.domain.Store;
-import umc.spring.service.MemberService.StoreQueryService;
+import umc.spring.service.StoreService.StoreQueryService;
 import umc.spring.validation.annotation.ExistStores;
 
 import javax.validation.ConstraintValidator;
@@ -16,7 +16,6 @@ import java.util.Optional;
 public class StoresExistValidator implements ConstraintValidator<ExistStores, Long> {
 
     private final StoreQueryService storeQueryService;
-
 
     @Override
     public void initialize(ExistStores constraintAnnotation) {
