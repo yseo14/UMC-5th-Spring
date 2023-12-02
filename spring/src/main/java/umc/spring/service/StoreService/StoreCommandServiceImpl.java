@@ -9,7 +9,7 @@ import umc.spring.repository.MemberRepository;
 import umc.spring.repository.RegionRepository;
 import umc.spring.repository.ReviewRepository;
 import umc.spring.repository.StoreRepository;
-import umc.spring.web.dto.StoreRequestDTO;
+import umc.spring.web.dto.StoreDTO.StoreRequestDTO;
 
 @Service
 @RequiredArgsConstructor

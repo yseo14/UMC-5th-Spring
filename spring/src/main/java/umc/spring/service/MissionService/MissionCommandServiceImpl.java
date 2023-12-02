@@ -10,9 +10,7 @@ import umc.spring.domain.mapping.MemberMission;
 import umc.spring.repository.MemberMissionRepository;
 import umc.spring.repository.MemberRepository;
 import umc.spring.repository.MissionRepository;
-import umc.spring.web.dto.MissionRequestDTO;
-
-import java.util.Optional;
+import umc.spring.web.dto.MissionDTO.MissionRequestDTO;
 
 @Service
 @RequiredArgsConstructor

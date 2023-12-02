@@ -4,11 +4,8 @@ import lombok.RequiredArgsConstructor;
 import umc.spring.domain.Member;
 import umc.spring.domain.Mission;
 import umc.spring.domain.mapping.MemberMission;
-import umc.spring.repository.MemberMissionRepository;
-import umc.spring.repository.MemberRepository;
-import umc.spring.repository.MissionRepository;
-import umc.spring.web.dto.MissionRequestDTO;
-import umc.spring.web.dto.MissionResponseDTO;
+import umc.spring.web.dto.MissionDTO.MissionRequestDTO;
+import umc.spring.web.dto.MissionDTO.MissionResponseDTO;
 
 import java.time.LocalDateTime;
 

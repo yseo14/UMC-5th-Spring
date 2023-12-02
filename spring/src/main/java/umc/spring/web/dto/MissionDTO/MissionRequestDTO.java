@@ -1,4 +1,4 @@
-package umc.spring.web.dto;
+package umc.spring.web.dto.MissionDTO;
 
 import lombok.Getter;
 import org.springframework.validation.annotation.Validated;
@@ -9,7 +9,7 @@ import umc.spring.validation.annotation.IsChallenging;
 public class MissionRequestDTO {
 
     @Getter
-    @IsChallenging
+//    @IsChallenging
     @Validated
     public static class ChallengeMissionDTO {
         MissionStatus missionStatus;
