@@ -7,7 +7,7 @@ import umc.spring.apiPayload.ApiResponse;
 import umc.spring.converter.StoreConverter;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
-import umc.spring.service.MemberService.StoreCommandService;
+import umc.spring.service.StoreService.StoreCommandService;
 import umc.spring.validation.annotation.ExistStores;
 import umc.spring.web.dto.StoreRequestDTO;
 import umc.spring.web.dto.StoreResponseDTO;
