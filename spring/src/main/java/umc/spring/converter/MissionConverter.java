@@ -12,8 +12,24 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class MissionConverter {
 
+    public static MissionResponseDTO.CreateMissionResponseDTO toCreateMissionResultDTO(Mission mission) {
+        return MissionResponseDTO.CreateMissionResponseDTO.builder()
+                .id(mission.getId())
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
 
-    public static MissionResponseDTO.ChallengeMissionResponseDTO toChallengeMissionDTO(MemberMission memberMission) {
+    public static Mission toMission(MissionRequestDTO.CreateMissionDTO request) {
+        return Mission.builder()
+                .content(request.getContent())
+                .reward(request.getReward())
+                .dueDate(request.getDueDate())
+                .build();
+    }
+
+
+
+    public static MissionResponseDTO.ChallengeMissionResponseDTO toChallengeMissionResultDTO(MemberMission memberMission) {
         return MissionResponseDTO.ChallengeMissionResponseDTO.builder()
                 .id(memberMission.getId())
                 .createdAt(LocalDateTime.now())
