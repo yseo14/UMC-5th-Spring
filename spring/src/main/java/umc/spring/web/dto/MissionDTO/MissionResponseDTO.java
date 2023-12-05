@@ -13,6 +13,16 @@ public class MissionResponseDTO {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class CreateMissionResponseDTO {
+        Long id;
+        LocalDateTime createdAt;
+    }
+
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class ChallengeMissionResponseDTO {
         Long id;
         LocalDateTime createdAt;

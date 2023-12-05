@@ -6,10 +6,12 @@ import org.springframework.validation.annotation.Validated;
 import umc.spring.converter.MissionConverter;
 import umc.spring.domain.Member;
 import umc.spring.domain.Mission;
+import umc.spring.domain.Store;
 import umc.spring.domain.mapping.MemberMission;
 import umc.spring.repository.MemberMissionRepository;
 import umc.spring.repository.MemberRepository;
 import umc.spring.repository.MissionRepository;
+import umc.spring.repository.StoreRepository;
 import umc.spring.web.dto.MissionDTO.MissionRequestDTO;
 
 @Service
@@ -20,6 +22,15 @@ public class MissionCommandServiceImpl implements MissionCommandService {
     private final MemberMissionRepository memberMissionRepository;
     private final MissionRepository missionRepository;
     private final MemberRepository memberRepository;
+    private final StoreRepository storeRepository;
+
+    @Override
+    public Mission createMission(Long storeId, MissionRequestDTO.CreateMissionDTO request) {
+        Mission mission = MissionConverter.toMission(request);
+        Store store = storeRepository.findById(storeId).get();
+        mission.setStore(store);
+        return missionRepository.save(mission);
+    }
 
     @Override
     public MemberMission challengeMission(MissionRequestDTO.ChallengeMissionDTO request) {
