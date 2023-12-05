@@ -1,9 +1,6 @@
 package umc.spring.domain.mapping;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import umc.spring.domain.Member;
 import umc.spring.domain.Mission;
 import umc.spring.domain.common.BaseEntity;
@@ -13,6 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class MemberMission extends BaseEntity {
@@ -32,4 +30,20 @@ public class MemberMission extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(15) DEFAULT 'PROGRESS'")
     private MissionStatus missionStatus;
+
+    public void setMember(Member member) {
+        if (this.member != null) {
+            member.getMemberMissionList().remove(this);
+        }
+        this.member = member;
+        member.getMemberMissionList().add(this);
+    }
+
+    public void setMission(Mission mission) {
+        if (this.mission != null) {
+            mission.getMemberMissionList().remove(this);
+        }
+        this.mission = mission;
+        mission.getMemberMissionList().add(this);
+    }
 }
