@@ -1,11 +1,14 @@
 package umc.spring.converter;
 
+import org.springframework.data.domain.Page;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
 import umc.spring.web.dto.StoreDTO.StoreRequestDTO;
 import umc.spring.web.dto.StoreDTO.StoreResponseDTO;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class StoreConverter {
     public static StoreResponseDTO.saveStoreResultDTO toSaveStoreResultDTO(Store store) {
@@ -36,4 +39,29 @@ public class StoreConverter {
                 .score(request.getScore())
                 .build();
     }
+
+    public static StoreResponseDTO.ReviewPreViewDTO toReviewPreViewDTO(Review review) {
+        return StoreResponseDTO.ReviewPreViewDTO.builder()
+                .ownerNickname(review.getMember().getName())
+                .score(review.getScore())
+                .createdAt(review.getCreatedAt())
+                .body(review.getBody())
+                .build();
+    }
+
+    public static StoreResponseDTO.ReviewPreViewListDTO reviewPreViewListDTO(Page<Review> reviewList) {
+
+        List<StoreResponseDTO.ReviewPreViewDTO> reviewPreViewDTOList = reviewList.stream()  //reviewList에 스트림을 생성해서 각 요소에 "map 안에 메서드"를 적용 후 다시 리스트로 만든다.
+                .map(StoreConverter::toReviewPreViewDTO).collect(Collectors.toList());
+
+        return StoreResponseDTO.ReviewPreViewListDTO.builder()
+                .isLast(reviewList.isLast())
+                .isFirst(reviewList.isFirst())
+                .totalPage(reviewList.getTotalPages())  //페이지네이션된 데이터의 총 페이지 수를 반환한다.
+                .totalElements(reviewList.getTotalElements())   //페이지네이션된 데이터의 총 요소 수를 반환한다.
+                .listSize(reviewPreViewDTOList.size())
+                .reviewList(reviewPreViewDTOList)
+                .build();
+    }
+
 }
