@@ -19,11 +19,16 @@ public class StoreRequestDTO {
 
     @Getter
     public static class ReviewDTO{
+
         @NotBlank
         String title;
+
         @NotBlank
         String body;
+
         @NotNull
         Float score;
     }
+
+
 }
