@@ -1,6 +1,7 @@
 package umc.spring.converter;
 
 import org.springframework.data.domain.Page;
+import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
 import umc.spring.web.dto.StoreDTO.StoreRequestDTO;
@@ -49,7 +50,7 @@ public class StoreConverter {
                 .build();
     }
 
-    public static StoreResponseDTO.ReviewPreViewListDTO reviewPreViewListDTO(Page<Review> reviewList) {
+    public static StoreResponseDTO.ReviewPreViewListDTO toReviewPreViewListDTO(Page<Review> reviewList) {
 
         List<StoreResponseDTO.ReviewPreViewDTO> reviewPreViewDTOList = reviewList.stream()  //reviewList에 스트림을 생성해서 각 요소에 "map 안에 메서드"를 적용 후 다시 리스트로 만든다.
                 .map(StoreConverter::toReviewPreViewDTO).collect(Collectors.toList());
@@ -64,4 +65,25 @@ public class StoreConverter {
                 .build();
     }
 
+    public static StoreResponseDTO.MissionPreViewDTO toMissionPreViewDTO(Mission mission) {
+        return StoreResponseDTO.MissionPreViewDTO.builder()
+                .reward(mission.getReward())
+                .content(mission.getContent())
+                .dueDate(mission.getDueDate())
+                .build();
+    }
+
+    public static StoreResponseDTO.MissionPreViewListDTO toMissionPreViewListDTO(Page<Mission> missionList) {
+        List<StoreResponseDTO.MissionPreViewDTO> missionPreViewDTOList = missionList.stream()
+                .map(StoreConverter::toMissionPreViewDTO).collect(Collectors.toList());
+
+        return StoreResponseDTO.MissionPreViewListDTO.builder()
+                .isFirst(missionList.isFirst())
+                .isLast(missionList.isLast())
+                .totalElements(missionList.getTotalElements())
+                .totalPage(missionList.getTotalPages())
+                .listSize(missionPreViewDTOList.size())
+                .missionList(missionPreViewDTOList)
+                .build();
+    }
 }
