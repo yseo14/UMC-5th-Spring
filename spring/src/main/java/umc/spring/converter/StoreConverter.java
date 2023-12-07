@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
+import umc.spring.domain.mapping.MemberMission;
 import umc.spring.web.dto.StoreDTO.StoreRequestDTO;
 import umc.spring.web.dto.StoreDTO.StoreResponseDTO;
 
@@ -84,6 +85,26 @@ public class StoreConverter {
                 .totalPage(missionList.getTotalPages())
                 .listSize(missionPreViewDTOList.size())
                 .missionList(missionPreViewDTOList)
+                .build();
+    }
+
+    public static StoreResponseDTO.MissionPreViewDTO toChallengingMissionPreViewDTO(MemberMission memberMission) {
+        return StoreResponseDTO.MissionPreViewDTO.builder()
+                .reward(memberMission.getMission().getReward())
+                .content(memberMission.getMission().getContent())
+                .dueDate(memberMission.getMission().getDueDate())
+                .build();
+    }
+    public static StoreResponseDTO.MissionPreViewListDTO toChallengingMissionPreViewListDTO(Page<MemberMission> memberMissionList) {
+        List<StoreResponseDTO.MissionPreViewDTO> ChallengingMissionPreViewDTOList = memberMissionList.stream()
+                .map(StoreConverter::toChallengingMissionPreViewDTO).collect(Collectors.toList());
+        return StoreResponseDTO.MissionPreViewListDTO.builder()
+                .isFirst(memberMissionList.isFirst())
+                .isLast(memberMissionList.isLast())
+                .totalElements(memberMissionList.getTotalElements())
+                .totalPage(memberMissionList.getTotalPages())
+                .listSize(ChallengingMissionPreViewDTOList.size())
+                .missionList(ChallengingMissionPreViewDTOList)
                 .build();
     }
 }
