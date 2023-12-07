@@ -18,7 +18,6 @@ import umc.spring.domain.Review;
 import umc.spring.service.MemberService.MemberCommandService;
 import umc.spring.service.MemberService.MemberQueryService;
 import umc.spring.validation.annotation.CheckPage;
-import umc.spring.validation.annotation.ExistStores;
 import umc.spring.web.dto.MemberDTO.MemberRequestDTO;
 import umc.spring.web.dto.MemberDTO.MemberResponseDTO;
 import umc.spring.web.dto.StoreDTO.StoreResponseDTO;
@@ -40,7 +39,7 @@ public class MemberRestController {
         return ApiResponse.onSuccess(MemberConverter.toJoinResultDTO(member));
     }
 
-    @GetMapping("/mypages/{memberId}/reviews")
+    @GetMapping("/mypage/{memberId}/reviews")
     @Operation(summary = "내가 작성한 리뷰 목록 조회 API", description = "내가 작성한 리뷰들의 목록을 조회하는 API이며, 페이징을 포함합니다. query String 으로 page 번호를 주세요")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공"),
@@ -54,6 +53,6 @@ public class MemberRestController {
     })
     public ApiResponse<StoreResponseDTO.ReviewPreViewListDTO> getReviewList(@PathVariable(name = "memberId") Long memberId, @CheckPage @RequestParam(name = "page") Integer page) {
         Page<Review> reviewList = memberQueryService.getMyReviewList(memberId, page);
-        return ApiResponse.onSuccess(StoreConverter.reviewPreViewListDTO(reviewList));
+        return ApiResponse.onSuccess(StoreConverter.toReviewPreViewListDTO(reviewList));
     }
 }
