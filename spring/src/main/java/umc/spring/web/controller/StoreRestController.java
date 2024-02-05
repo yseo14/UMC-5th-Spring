@@ -8,8 +8,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import umc.spring.apiPayload.ApiResponse;
 import umc.spring.converter.StoreConverter;
 import umc.spring.domain.Mission;
@@ -42,16 +44,17 @@ public class StoreRestController {
         return ApiResponse.onSuccess(StoreConverter.toSaveStoreResultDTO(store));
     }
 
-    @PostMapping("/{storeId}/reviews")
+    @PostMapping(value = "/{storeId}/reviews",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "가게에 리뷰를 등록하는 API", description = "가게에 리뷰를 등록하는 API이며, path variable로 가게 id, request parameter로 멤버의 아이디를 주세요.")
     @Parameters({
             @Parameter(name = "storeId",description = "가게의 아이디, path variable입니다."),
             @Parameter(name = "memberId",description = "멤버의 아이디, quest parameter입니다.")
     })
-    public ApiResponse<StoreResponseDTO.CreateReviewResultDTO> createReview(@RequestBody @Valid StoreRequestDTO.ReviewDTO request,
+    public ApiResponse<StoreResponseDTO.CreateReviewResultDTO> createReview(@RequestPart @Valid StoreRequestDTO.ReviewDTO request,
+                                                                            @RequestPart (value = "reviewImage",required = false) MultipartFile reviewImage,
                                                                             @ExistStores @PathVariable(name = "storeId") Long storeId,
                                                                             @RequestParam(name = "memberId") Long memberId) {
-        Review review = storeCommandService.createReview(memberId, storeId, request);
+        Review review = storeCommandService.createReview(memberId, storeId, request,reviewImage);
         return ApiResponse.onSuccess(StoreConverter.toCreateReviewResultDTO(review));
     }
 
