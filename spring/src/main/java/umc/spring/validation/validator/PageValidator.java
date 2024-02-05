@@ -7,7 +7,6 @@ import umc.spring.validation.annotation.CheckPage;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.lang.reflect.Field;
 
 @Component
 @RequiredArgsConstructor
@@ -23,25 +22,11 @@ public class PageValidator implements ConstraintValidator<CheckPage, Integer> {
         Integer page = value;
         if (page <= 0) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(ErrorStatus.PAGE_NOT_VALID.getMessage().toString()).addConstraintViolation();
+            context.buildConstraintViolationWithTemplate(ErrorStatus.PAGE_NOT_VALID.toString()).addConstraintViolation();
             return false;
         }
 
         return true;
     }
-
-//    public static void minusOneToPage(Object obj) throws IllegalAccessException{
-//        Class<?> clazz = obj.getClass();
-//
-//        for (Field field : clazz.getDeclaredFields()) {
-//            CheckPage annotation = field.getAnnotation(CheckPage.class);
-//            if (annotation != null && field.getType() == Integer.class) {
-//                field.setAccessible(true);
-//                Integer value = (Integer) field.get(obj);
-//                if (value != null) {
-//                    field.set(obj, value - 1);
-//                }
-//            }
-//        }
-//    }
+    
 }
