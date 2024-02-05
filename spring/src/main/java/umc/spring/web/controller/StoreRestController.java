@@ -25,6 +25,7 @@ import umc.spring.web.dto.StoreDTO.StoreRequestDTO;
 import umc.spring.web.dto.StoreDTO.StoreResponseDTO;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @Validated
@@ -90,5 +91,12 @@ public class StoreRestController {
     public ApiResponse<StoreResponseDTO.MissionPreViewListDTO> getMissionList(@ExistStores @PathVariable(name = "storeId") Long storeId,  @CheckPage @RequestParam(name = "page") Integer page) {
         Page<Mission> missionList =storeQueryService.getMissionList(storeId, page-1);
         return ApiResponse.onSuccess(StoreConverter.toMissionPreViewListDTO(missionList));
+    }
+
+    @DeleteMapping("/{reviewId}")
+    public ApiResponse<StoreResponseDTO.DeleteReviewImageDTO> deleteReviewImage(@PathVariable(name = "reviewId") Long reviewId,
+                                                                                @RequestParam(name = "memberId") Long memberId) throws IOException {
+        return ApiResponse.onSuccess(storeCommandService.deleteReviewImage(memberId,reviewId));
+
     }
 }

@@ -78,4 +78,14 @@ public class StoreResponseDTO {
         LocalDateTime dueDate;
     }
 
+
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DeleteReviewImageDTO {
+        Long reviewId;
+        LocalDateTime deletedAt;
+    }
 }

@@ -1,5 +1,6 @@
 package umc.spring.aws.s3;
 
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -27,7 +28,6 @@ public class AmazonS3Manager{
     public String uploadFile(String keyName, MultipartFile file){
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(file.getSize());
-        log.error("file++++++"+file.getSize());
         try {
             amazonS3.putObject(new PutObjectRequest(amazonConfig.getBucket(), keyName, file.getInputStream(), metadata));
         }catch (IOException e){
@@ -39,5 +39,15 @@ public class AmazonS3Manager{
 
     public String generateReviewKeyName(Uuid uuid) {
         return amazonConfig.getReviewPath() + '/' + uuid.getUuid();
+    }
+
+    public void deleteFile(String fileUrl) throws IOException{
+        int indexOfReviews = fileUrl.indexOf("reviews/");
+        String fileKey = fileUrl.substring(indexOfReviews);
+        try{
+            amazonS3.deleteObject(amazonConfig.getBucket(),fileKey);
+        }catch (SdkClientException e) {
+            throw new IOException("Error deleting file from S3", e);
+        }
     }
 }
