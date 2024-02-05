@@ -1,6 +1,7 @@
 package umc.spring.domain;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 import umc.spring.domain.Member;
 import umc.spring.domain.Store;
 import umc.spring.domain.common.BaseEntity;
@@ -24,6 +25,7 @@ public class Review extends BaseEntity {
     private Float score;
 
     private String body;
+
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewImage> reviewImageList;
